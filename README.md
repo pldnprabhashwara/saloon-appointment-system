@@ -1,7 +1,4 @@
-Sure 👍 Since you're likely building small projects to strengthen your programming skills (especially with your goal of doing **60+ Python projects** for AI/ML preparation), a **Salon Appointment System** is a very good beginner–intermediate project.
-Here is a **clean, professional README file** you can directly use in your project.
 
----
 
 # 💇‍♀️ Salon Appointment System – README
 
