@@ -1,3 +1,0 @@
-name,phone,email,password,registeredAt,lastUpdatedAt
-Lakshitha Dilshann,0764792983,info.jkplakshitha@gmail.com,@Password#0,2026-04-18T09:13:00.932779,2026-04-18T09:32:37.190518
-Nayana prabhashwara,0721912028,pldnprabhashwara2002@gmail.com,12Np2002!,2026-04-19T10:12:37.3705376,2026-04-19T10:12:37.3705376
