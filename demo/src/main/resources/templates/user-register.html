@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register - Haircare Salon</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:500,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/css/aos.css">
+
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .form-control:focus {
+            border-color: #F96D00;
+            box-shadow: 0 0 0 0.2rem rgba(249, 109, 0, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: #F96D00;
+            border-color: #F96D00;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e55e00;
+            border-color: #e55e00;
+        }
+        
+        .password-strength {
+            margin-top: 8px;
+            font-size: 12px;
+            padding: 8px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .password-strength.weak {
+            display: block;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .password-strength.medium {
+            display: block;
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .password-strength.strong {
+            display: block;
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .error-text {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .error-text.show {
+            display: block;
+        }
+        
+        .form-group.error .form-control {
+            border-color: #dc3545;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="/"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	        	<li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+	        	<li class="nav-item"><a href="/services" class="nav-link">Services</a></li>
+	        	<li class="nav-item"><a href="/gallery" class="nav-link">Gallery</a></li>
+	        	<li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+	        	<li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
+                  <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/images/bg-1.jpg');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate pb-5 text-center">
+            <h2 class="mb-0 bread">Create Account</h2>
+            <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Register <i class="ion-ios-arrow-round-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow-lg">
+                        <div class="card-body p-5">
+                            <h3 class="card-title text-center mb-4">Register for Haircare</h3>
+                            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <span th:text="${error}"></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form method="POST" action="/auth/register" onsubmit="return validateForm()">
+                                <div class="form-group mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                                    <div class="error-text" id="nameError"></div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter 10-digit phone number" maxlength="10" required>
+                                    <div class="error-text" id="phoneError"></div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                    <div class="error-text" id="emailError"></div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Create a strong password" required oninput="checkPasswordStrength()">
+                                    <div class="password-strength" id="passwordStrength"></div>
+                                    <div class="error-text" id="passwordError"></div>
+                                    <small class="text-muted d-block mt-2">
+                                        Password must contain:
+                                        <ul class="mb-0 mt-1">
+                                            <li>At least 8 characters</li>
+                                            <li>At least one uppercase letter (A-Z)</li>
+                                            <li>At least one number (0-9)</li>
+                                            <li>At least one special character (!@#$%^&*)</li>
+                                        </ul>
+                                    </small>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <p class="mb-0">Already have an account? <a href="/user-form" class="text-decoration-none">Login here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="ftco-footer ftco-section">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md">
+              <div class="ftco-footer-widget mb-4">
+                <h2 class="ftco-heading-2 logo">Haircare</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                  <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                  <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                  <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="ftco-footer-widget mb-4 ml-md-5">
+                <h2 class="ftco-heading-2">Information</h2>
+                <ul class="list-unstyled">
+                  <li><a href="#" class="py-2 d-block">FAQs</a></li>
+                  <li><a href="#" class="py-2 d-block">Privacy</a></li>
+                  <li><a href="#" class="py-2 d-block">Terms Condition</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md">
+               <div class="ftco-footer-widget mb-4">
+                <h2 class="ftco-heading-2">Links</h2>
+                <ul class="list-unstyled">
+                  <li><a href="#" class="py-2 d-block">Home</a></li>
+                  <li><a href="#" class="py-2 d-block">About</a></li>
+                  <li><a href="#" class="py-2 d-block">Services</a></li>
+                  <li><a href="#" class="py-2 d-block">Work</a></li>
+                  <li><a href="#" class="py-2 d-block">Blog</a></li>
+                  <li><a href="#" class="py-2 d-block">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="ftco-footer-widget mb-4">
+                  <h2 class="ftco-heading-2">Have a Questions?</h2>
+                  <div class="block-23 mb-3">
+                    <ul>
+                      <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                      <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                      <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.stellar.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/jquery.animateNumber.min.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/jquery.timepicker.min.js"></script>
+    <script src="/js/scrollax.min.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+        function checkPasswordStrength() {
+            const password = document.getElementById('regPassword').value;
+            const strengthDiv = document.getElementById('passwordStrength');
+            
+            let strength = 0;
+            let feedback = [];
+            
+            // Check length
+            if (password.length >= 8) {
+                strength++;
+            } else {
+                feedback.push('At least 8 characters');
+            }
+            
+            // Check uppercase
+            if (/[A-Z]/.test(password)) {
+                strength++;
+            } else {
+                feedback.push('At least one uppercase letter');
+            }
+            
+            // Check number
+            if (/[0-9]/.test(password)) {
+                strength++;
+            } else {
+                feedback.push('At least one number');
+            }
+            
+            // Check special character
+            if (/[!@#$%^&*]/.test(password)) {
+                strength++;
+            } else {
+                feedback.push('At least one special character');
+            }
+            
+            // Update display
+            if (password.length === 0) {
+                strengthDiv.style.display = 'none';
+            } else if (strength === 4) {
+                strengthDiv.className = 'password-strength strong';
+                strengthDiv.textContent = '✓ Strong password';
+            } else if (strength >= 2) {
+                strengthDiv.className = 'password-strength medium';
+                strengthDiv.textContent = '◐ Medium strength - Missing: ' + feedback.join(', ');
+            } else {
+                strengthDiv.className = 'password-strength weak';
+                strengthDiv.textContent = '✗ Weak password - Missing: ' + feedback.join(', ');
+            }
+        }
+        
+        function validateForm() {
+            let isValid = true;
+            
+            // Clear previous errors
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('nameError').classList.remove('show');
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('phoneError').classList.remove('show');
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('emailError').classList.remove('show');
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('passwordError').classList.remove('show');
+            
+        function validateForm() {
+            let isValid = true;
+            
+            // Clear previous errors
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('nameError').classList.remove('show');
+            document.getElementById('phoneError').textContent = '';
+            document.getElementById('phoneError').classList.remove('show');
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('emailError').classList.remove('show');
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('passwordError').classList.remove('show');
+            
+            // Validate name
+            const name = document.getElementById('name').value.trim();
+            if (name.length < 2) {
+                document.getElementById('nameError').textContent = 'Name must be at least 2 characters';
+                document.getElementById('nameError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone').value.trim();
+            if (!/^\d{10}$/.test(phone)) {
+                document.getElementById('phoneError').textContent = 'Phone number must be exactly 10 digits';
+                document.getElementById('phoneError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                document.getElementById('emailError').classList.add('show');
+                isValid = false;
+            }
+            
+            // Validate password strength
+            const password = document.getElementById('password').value;
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById('passwordError').textContent = 'Password does not meet all requirements';
+                document.getElementById('passwordError').classList.add('show');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+    </script>
+    </body>
+</html>
