@@ -55,4 +55,9 @@ public class RouteController {
     public String userRegister() {
         return "user-register";
     }
+
+    @GetMapping("/stylist")
+    public String stylist() {
+        return "stylist";
+    }
 }
