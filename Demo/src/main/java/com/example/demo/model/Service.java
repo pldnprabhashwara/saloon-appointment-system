@@ -4,16 +4,21 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Service Model Class
+ * OOP Concept: Encapsulation - All fields are private, accessed via getters/setters
+ * Represents a salon service (e.g., Haircut, Coloring, Facial)
+ */
 public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // Private fields - Encapsulation (Information Hiding)
     private String serviceId;
     private String serviceName;
-    private String category;
-    private double price;
-    private int durationMinutes;
-    private String status;
+    private String category;       // e.g., Hair, Skin, Nail
+    private double price;          // Private - cannot be accessed directly
+    private int durationMinutes;   // Private - controlled access only
+    private String status;         // Active / Inactive
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -23,12 +28,18 @@ public class Service implements Serializable {
     private static final int MIN_DURATION = 5;
     private static final int MAX_DURATION = 480;
 
+    /**
+     * Default Constructor
+     */
     public Service() {
         this.status = "Active";
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Parameterized Constructor
+     */
     public Service(String serviceId, String serviceName, String category,
                    double price, int durationMinutes, String description) {
         this.serviceId = serviceId;
@@ -42,19 +53,31 @@ public class Service implements Serializable {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // ==================== GETTERS (Encapsulation) ====================
 
     public String getServiceId() { return serviceId; }
     public String getServiceName() { return serviceName; }
     public String getCategory() { return category; }
 
+    /**
+     * Get price - Encapsulation: price field is private
+     */
     public double getPrice() { return price; }
 
+    /**
+     * Get formatted price as string (e.g., "Rs. 1500.00")
+     * Abstraction of formatting logic
+     */
     public String getFormattedPrice() {
         return String.format("Rs. %.2f", price);
     }
 
     public int getDurationMinutes() { return durationMinutes; }
 
+    /**
+     * Get formatted duration (e.g., "1h 30m")
+     * Abstraction of conversion logic
+     */
     public String getFormattedDuration() {
         if (durationMinutes < 60) {
             return durationMinutes + " mins";
@@ -71,6 +94,7 @@ public class Service implements Serializable {
 
     public boolean isActive() { return "Active".equalsIgnoreCase(status); }
 
+    // ==================== SETTERS with Validation (Encapsulation) ====================
 
     public void setServiceId(String serviceId) {
         if (serviceId == null || serviceId.trim().isEmpty()) {
@@ -95,6 +119,9 @@ public class Service implements Serializable {
         this.updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Set price with validation - Encapsulation protects price field
+     */
     public void setPrice(double price) {
         if (price < MIN_PRICE) {
             throw new IllegalArgumentException("Price cannot be negative");
@@ -103,6 +130,9 @@ public class Service implements Serializable {
         this.updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Set duration with validation - Encapsulation protects durationMinutes field
+     */
     public void setDurationMinutes(int durationMinutes) {
         if (durationMinutes < MIN_DURATION || durationMinutes > MAX_DURATION) {
             throw new IllegalArgumentException(
@@ -126,7 +156,12 @@ public class Service implements Serializable {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // ==================== FILE STORAGE METHODS ====================
 
+    /**
+     * Convert to CSV line for file storage
+     * Abstraction: caller doesn't need to know the format
+     */
     public String toCSV() {
         return String.format("%s|%s|%s|%.2f|%d|%s|%s|%s|%s",
             serviceId,
@@ -141,7 +176,10 @@ public class Service implements Serializable {
         );
     }
 
-
+    /**
+     * Create Service from a CSV line
+     * Abstraction: parsing logic is hidden
+     */
     public static Service fromCSV(String csvLine) {
         String[] parts = csvLine.split("\\|");
         if (parts.length < 6) {

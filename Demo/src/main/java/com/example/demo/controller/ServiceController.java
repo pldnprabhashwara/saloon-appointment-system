@@ -9,14 +9,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-
+/**
+ * ServiceController - Web Layer (Spring MVC)
+ * Handles HTTP requests for Salon Service CRUD operations
+ * Routes:
+ *   GET  /services            -> view all services
+ *   GET  /services/add        -> show add form
+ *   POST /services/add        -> save new service
+ *   GET  /services/edit/{id}  -> show edit form
+ *   POST /services/edit/{id}  -> update service
+ *   POST /services/delete/{id}-> delete service
+ *   GET  /services/search     -> search services
+ */
 @Controller
 @RequestMapping("/services")
 public class ServiceController {
 
     private final ServiceService serviceService = new ServiceService();
 
+    // ==================== READ - List all services ====================
 
+    /**
+     * View all services (Admin view)
+     */
     @GetMapping
     public String listServices(Model model,
                                @RequestParam(required = false) String category,
@@ -42,14 +57,21 @@ public class ServiceController {
         }
         return "service-list";
     }
-    
 
+    // ==================== CREATE - Add new service ====================
+
+    /**
+     * Show add service form
+     */
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("pageTitle", "Add New Service");
         return "service-add";
     }
 
+    /**
+     * Handle add service form submission
+     */
     @PostMapping("/add")
     public String addService(@RequestParam String serviceName,
                              @RequestParam String category,
@@ -68,8 +90,11 @@ public class ServiceController {
         }
     }
 
+    // ==================== UPDATE - Edit service ====================
 
-
+    /**
+     * Show edit service form
+     */
     @GetMapping("/edit/{serviceId}")
     public String showEditForm(@PathVariable String serviceId, Model model) {
         try {
@@ -82,6 +107,9 @@ public class ServiceController {
         return "service-edit";
     }
 
+    /**
+     * Handle edit service form submission
+     */
     @PostMapping("/edit/{serviceId}")
     public String updateService(@PathVariable String serviceId,
                                 @RequestParam String serviceName,
@@ -101,6 +129,11 @@ public class ServiceController {
         }
     }
 
+    // ==================== DELETE ====================
+
+    /**
+     * Delete a service
+     */
     @PostMapping("/delete/{serviceId}")
     public String deleteService(@PathVariable String serviceId,
                                 RedirectAttributes redirectAttributes) {
@@ -113,7 +146,9 @@ public class ServiceController {
         return "redirect:/services";
     }
 
-
+    /**
+     * Deactivate (soft delete) a service
+     */
     @PostMapping("/deactivate/{serviceId}")
     public String deactivateService(@PathVariable String serviceId,
                                     RedirectAttributes redirectAttributes) {

@@ -1,3 +1,6 @@
 spring:
   application:
-    name: demo
+    name: salon-services
+
+server:
+  port: 8088

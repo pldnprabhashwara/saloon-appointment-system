@@ -5,6 +5,11 @@ import com.example.demo.repository.ServiceRepository;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * ServiceService - Business Logic Layer
+ * OOP Concepts: Abstraction, Encapsulation
+ * Handles all business rules for Salon Services
+ */
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
@@ -13,6 +18,11 @@ public class ServiceService {
         this.serviceRepository = ServiceRepository.getInstance();
     }
 
+    // ==================== CREATE ====================
+
+    /**
+     * Add a new salon service
+     */
     public boolean addService(String serviceName, String category,
                               double price, int durationMinutes, String description) throws Exception {
         // Validate
@@ -34,17 +44,25 @@ public class ServiceService {
         return serviceRepository.save(service);
     }
 
+    // ==================== READ ====================
 
+    /**
+     * Get all services
+     */
     public List<Service> getAllServices() throws IOException {
         return serviceRepository.findAll();
     }
 
-
+    /**
+     * Get only active services (for public display)
+     */
     public List<Service> getActiveServices() throws IOException {
         return serviceRepository.findAllActive();
     }
 
-
+    /**
+     * Get service by ID
+     */
     public Service getServiceById(String serviceId) throws IOException {
         if (serviceId == null || serviceId.trim().isEmpty())
             throw new IllegalArgumentException("Service ID cannot be empty");
@@ -53,17 +71,27 @@ public class ServiceService {
         return s;
     }
 
-
+    /**
+     * Search services by name keyword
+     */
     public List<Service> searchServices(String keyword) throws IOException {
         if (keyword == null || keyword.trim().isEmpty()) return getAllServices();
         return serviceRepository.searchByName(keyword.trim());
     }
 
+    /**
+     * Get services by category
+     */
     public List<Service> getServicesByCategory(String category) throws IOException {
         if (category == null || category.trim().isEmpty()) return getAllServices();
         return serviceRepository.findByCategory(category.trim());
     }
 
+    // ==================== UPDATE ====================
+
+    /**
+     * Update service details
+     */
     public boolean updateService(String serviceId, String serviceName, String category,
                                   double price, int durationMinutes, String description) throws Exception {
         Service service = serviceRepository.findById(serviceId);
@@ -83,13 +111,20 @@ public class ServiceService {
         return serviceRepository.update(service);
     }
 
+    // ==================== DELETE ====================
+
+    /**
+     * Hard delete a service
+     */
     public boolean deleteService(String serviceId) throws IOException {
         if (serviceId == null || serviceId.trim().isEmpty())
             throw new IllegalArgumentException("Service ID cannot be empty");
         return serviceRepository.delete(serviceId);
     }
 
-
+    /**
+     * Soft delete - deactivate without removing
+     */
     public boolean deactivateService(String serviceId) throws IOException {
         return serviceRepository.deactivate(serviceId);
     }

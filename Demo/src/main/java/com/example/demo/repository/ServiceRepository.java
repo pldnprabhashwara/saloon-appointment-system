@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
 
+/**
+ * ServiceRepository - File-based Data Access Layer
+ * OOP Concepts: Encapsulation, Abstraction, Singleton Pattern
+ * Handles all CRUD operations on services.txt
+ */
 public class ServiceRepository {
 
     private static final String SERVICES_FILE_PATH = "data/services.txt";
@@ -23,6 +28,10 @@ public class ServiceRepository {
         return instance;
     }
 
+    /**
+     * Initialize services.txt if not exists
+     * Private method - Information Hiding
+     */
     private void initializeFile() {
         try {
             Path filePath = Paths.get(SERVICES_FILE_PATH);
@@ -41,6 +50,11 @@ public class ServiceRepository {
         }
     }
 
+    // ==================== CREATE ====================
+
+    /**
+     * Save a new service to services.txt
+     */
     public synchronized boolean save(Service service) throws IOException {
         if (service == null) throw new IllegalArgumentException("Service cannot be null");
 
@@ -53,6 +67,11 @@ public class ServiceRepository {
         return true;
     }
 
+    // ==================== READ ====================
+
+    /**
+     * Find service by ID
+     */
     public Service findById(String serviceId) throws IOException {
         if (serviceId == null || serviceId.trim().isEmpty())
             throw new IllegalArgumentException("Service ID cannot be empty");
@@ -74,6 +93,9 @@ public class ServiceRepository {
         return null;
     }
 
+    /**
+     * Find all services
+     */
     public synchronized List<Service> findAll() throws IOException {
         List<Service> services = new ArrayList<>();
         Path filePath = Paths.get(SERVICES_FILE_PATH);
@@ -92,6 +114,9 @@ public class ServiceRepository {
         return services;
     }
 
+    /**
+     * Find services by category
+     */
     public List<Service> findByCategory(String category) throws IOException {
         List<Service> result = new ArrayList<>();
         for (Service s : findAll()) {
@@ -100,6 +125,9 @@ public class ServiceRepository {
         return result;
     }
 
+    /**
+     * Find only active services
+     */
     public List<Service> findAllActive() throws IOException {
         List<Service> result = new ArrayList<>();
         for (Service s : findAll()) {
@@ -108,6 +136,9 @@ public class ServiceRepository {
         return result;
     }
 
+    /**
+     * Search services by name (partial match)
+     */
     public List<Service> searchByName(String keyword) throws IOException {
         List<Service> result = new ArrayList<>();
         String lower = keyword.toLowerCase();
@@ -117,6 +148,11 @@ public class ServiceRepository {
         return result;
     }
 
+    // ==================== UPDATE ====================
+
+    /**
+     * Update an existing service
+     */
     public synchronized boolean update(Service updatedService) throws IOException {
         if (updatedService == null) throw new IllegalArgumentException("Service cannot be null");
 
@@ -145,6 +181,11 @@ public class ServiceRepository {
         return true;
     }
 
+    // ==================== DELETE ====================
+
+    /**
+     * Delete (hard delete) a service by ID
+     */
     public synchronized boolean delete(String serviceId) throws IOException {
         if (serviceId == null || serviceId.trim().isEmpty())
             throw new IllegalArgumentException("Service ID cannot be empty");
@@ -158,10 +199,7 @@ public class ServiceRepository {
 
         for (int i = 1; i < lines.size(); i++) {
             String line = lines.get(i).trim();
-            if (line.isEmpty()) {
-                updatedLines.add(line);
-                continue;
-            }
+            if (line.isEmpty()) { updatedLines.add(line); continue; }
             try {
                 Service s = Service.fromCSV(line);
                 if (!s.getServiceId().equalsIgnoreCase(serviceId)) {
@@ -180,6 +218,9 @@ public class ServiceRepository {
         return true;
     }
 
+    /**
+     * Soft delete - mark as Inactive instead of removing
+     */
     public synchronized boolean deactivate(String serviceId) throws IOException {
         Service service = findById(serviceId);
         if (service == null) throw new IllegalArgumentException("Service not found: " + serviceId);
@@ -187,7 +228,9 @@ public class ServiceRepository {
         return update(service);
     }
 
-
+    /**
+     * Generate next Service ID (e.g., SRV001, SRV002)
+     */
     public String generateNextId() throws IOException {
         List<Service> all = findAll();
         int max = 0;
