@@ -1,0 +1,2 @@
+type,appointmentId,customerName,customerPhone,serviceType,stylistName,appointmentDate,appointmentTime,bookingStatus,price,vipPerk
+VIP,95d6cac3-86fa-4b57-bcdf-10818ab09d81,KAVI,0989838988,Facial,Emma,2026-05-21,14:30,Pending,60.00,Premium Coffee

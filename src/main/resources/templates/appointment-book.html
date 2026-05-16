@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/appointments-layout :: head('Book Appointment - Salon Luxe')}"></head>
+<body class="appointment-module">
+    
+    <nav th:replace="~{fragments/appointments-layout :: navbar}"></nav>
+
+    <main>
+        <section class="hero-wrap" style="background-image: url('/images/bg-2.jpg'); min-height: 100vh; display: flex; align-items: center; padding: 100px 0;">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row no-gutters justify-content-center align-items-center">
+                    <div class="col-lg-10">
+                        <div class="text text-center mb-5">
+                            <span class="subheading">Book Your Session</span>
+                            <h1 class="mb-4">Premium Salon Experience</h1>
+                        </div>
+                        
+                        <div class="booking-form-wrap">
+                            <div class="card booking-card">
+                                <div class="card-body p-4 p-md-5">
+                                    
+                                    <!-- Alerts -->
+                                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <span th:text="${successMessage}"></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <span th:text="${errorMessage}"></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <span th:text="${error}"></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    
+                                    <!-- Form -->
+                                    <form action="/appointments/save" method="post" id="bookingForm" class="needs-validation" novalidate>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Customer Name</label>
+                                                    <input type="text" name="customerName" class="form-control" required minlength="2" placeholder="Your Name">
+                                                    <div class="invalid-feedback">Please enter a valid name.</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Phone Number</label>
+                                                    <input type="tel" name="customerPhone" class="form-control" required pattern="\d{10}" placeholder="Phone Number">
+                                                    <div class="invalid-feedback">Please enter a 10-digit phone number.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Service Type</label>
+                                                    <div class="select-wrap">
+                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                        <select name="serviceType" class="form-control" required>
+                                                            <option value="" disabled selected>Select a service</option>
+                                                            <option value="Haircut">Haircut</option>
+                                                            <option value="Beard Trim">Beard Trim</option>
+                                                            <option value="Facial">Facial</option>
+                                                            <option value="Hair Coloring">Hair Coloring</option>
+                                                            <option value="Hair Wash">Hair Wash</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="invalid-feedback">Please select a service.</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Stylist</label>
+                                                    <div class="select-wrap">
+                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                        <select name="stylistName" class="form-control" required>
+                                                            <option value="" disabled selected>Choose stylist</option>
+                                                            <option value="Emma">Emma</option>
+                                                            <option value="Liam">Liam</option>
+                                                            <option value="Sophia">Sophia</option>
+                                                            <option value="Noah">Noah</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="invalid-feedback">Please select a stylist.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Date</label>
+                                                    <div class="input-wrap">
+                                                        <div class="icon"><span class="fa fa-calendar"></span></div>
+                                                        <input type="text" name="date" class="form-control datepicker" required placeholder="Select date">
+                                                    </div>
+                                                    <div class="invalid-feedback">Please select a valid future date.</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label mb-3">Select Appointment Time</label>
+                                                    <input type="hidden" name="time" id="selectedTime" required>
+                                                    
+                                                    <div class="time-slots-container">
+                                                        <div class="session-label mb-2"><i class="far fa-sun me-2"></i>Morning Sessions</div>
+                                                        <div class="time-slots-grid mb-4">
+                                                            <div class="time-slot" data-time="09:00">09:00 AM</div>
+                                                            <div class="time-slot" data-time="09:30">09:30 AM</div>
+                                                            <div class="time-slot" data-time="10:00">10:00 AM</div>
+                                                            <div class="time-slot" data-time="10:30">10:30 AM</div>
+                                                            <div class="time-slot" data-time="11:00">11:00 AM</div>
+                                                            <div class="time-slot" data-time="11:30">11:30 AM</div>
+                                                        </div>
+
+                                                        <div class="session-label mb-2"><i class="fas fa-sun me-2"></i>Afternoon Sessions</div>
+                                                        <div class="time-slots-grid">
+                                                            <div class="time-slot" data-time="13:00">01:00 PM</div>
+                                                            <div class="time-slot" data-time="13:30">01:30 PM</div>
+                                                            <div class="time-slot" data-time="14:00">02:00 PM</div>
+                                                            <div class="time-slot" data-time="14:30">02:30 PM</div>
+                                                            <div class="time-slot" data-time="15:00">03:00 PM</div>
+                                                            <div class="time-slot" data-time="15:30">03:30 PM</div>
+                                                            <div class="time-slot" data-time="16:00">04:00 PM</div>
+                                                            <div class="time-slot" data-time="16:30">04:30 PM</div>
+                                                            <div class="time-slot" data-time="17:00">05:00 PM</div>
+                                                            <div class="time-slot" data-time="17:30">05:30 PM</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="invalid-feedback d-block mt-2" id="timeError" style="display: none !important;">Please select an available time slot.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Appointment Type</label>
+                                                    <select name="type" id="typeSelect" class="form-control" required onchange="toggleVIP()">
+                                                        <option value="REGULAR">Regular Experience</option>
+                                                        <option value="VIP">VIP Luxury Experience</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4 vip-section" id="vipSection">
+                                                <div class="form-group">
+                                                    <label class="label">Complimentary Drink (VIP Only)</label>
+                                                    <select name="vipPerk" class="form-control">
+                                                        <option value="Champagne">Champagne</option>
+                                                        <option value="Premium Coffee">Premium Coffee</option>
+                                                        <option value="Sparkling Water">Sparkling Water</option>
+                                                        <option value="Herbal Tea">Herbal Tea</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mt-4 text-center">
+                                            <button type="submit" class="btn btn-primary py-3 px-5">Confirm Booking</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/appointments-layout :: footer}"></footer>
+    <div th:replace="~{fragments/appointments-layout :: scripts}"></div>
+</body>
+</html>
