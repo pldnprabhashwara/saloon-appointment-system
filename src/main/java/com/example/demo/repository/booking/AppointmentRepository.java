@@ -1,7 +1,7 @@
-package com.example.demo.repository;
+package com.example.demo.repository.booking;
 
-import com.example.demo.model.Appointment;
-import com.example.demo.util.AppointmentFileHandler;
+import com.example.demo.model.booking.Appointment;
+import com.example.demo.util.booking.AppointmentFileHandler;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.example.demo.exception;
+package com.example.demo.exception.booking;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

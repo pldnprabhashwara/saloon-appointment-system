@@ -1,4 +1,4 @@
-package com.example.demo.exception;
+package com.example.demo.exception.booking;
 
 /**
  * Exception thrown when an appointment cannot be found by its ID.

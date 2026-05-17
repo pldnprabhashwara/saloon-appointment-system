@@ -1,4 +1,4 @@
-package com.example.demo.exception;
+package com.example.demo.exception.booking;
 
 /**
  * Base custom exception for the Appointment module.

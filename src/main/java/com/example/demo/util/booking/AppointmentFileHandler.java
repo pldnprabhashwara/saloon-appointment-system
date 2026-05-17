@@ -1,8 +1,8 @@
-package com.example.demo.util;
+package com.example.demo.util.booking;
 
-import com.example.demo.model.Appointment;
-import com.example.demo.model.RegularAppointment;
-import com.example.demo.model.VIPAppointment;
+import com.example.demo.model.booking.Appointment;
+import com.example.demo.model.booking.RegularAppointment;
+import com.example.demo.model.booking.VIPAppointment;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
@@ -10,7 +10,6 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

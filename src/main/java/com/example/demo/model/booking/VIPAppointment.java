@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.booking;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

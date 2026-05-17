@@ -1,9 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.controller.booking;
 
-import com.example.demo.exception.AppointmentException;
-import com.example.demo.exception.AppointmentNotFoundException;
-import com.example.demo.model.Appointment;
-import com.example.demo.service.AppointmentService;
+import com.example.demo.exception.booking.AppointmentException;
+import com.example.demo.exception.booking.AppointmentNotFoundException;
+import com.example.demo.model.booking.Appointment;
+import com.example.demo.service.booking.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

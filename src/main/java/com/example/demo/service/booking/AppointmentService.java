@@ -1,11 +1,11 @@
-package com.example.demo.service;
+package com.example.demo.service.booking;
 
-import com.example.demo.exception.AppointmentException;
-import com.example.demo.exception.AppointmentNotFoundException;
-import com.example.demo.model.Appointment;
-import com.example.demo.model.RegularAppointment;
-import com.example.demo.model.VIPAppointment;
-import com.example.demo.repository.AppointmentRepository;
+import com.example.demo.exception.booking.AppointmentException;
+import com.example.demo.exception.booking.AppointmentNotFoundException;
+import com.example.demo.model.booking.Appointment;
+import com.example.demo.model.booking.RegularAppointment;
+import com.example.demo.model.booking.VIPAppointment;
+import com.example.demo.repository.booking.AppointmentRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

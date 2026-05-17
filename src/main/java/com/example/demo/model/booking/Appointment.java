@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.booking;
 
 import java.io.Serializable;
 import java.time.LocalDate;
