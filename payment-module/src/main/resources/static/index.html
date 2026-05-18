@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Payment & Billing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <div>
+                <p class="eyebrow">Member 5 module</p>
+                <h1>Payment & Billing Desk</h1>
+                <p class="hero-copy">Create salon bills, process card or cash payments, update payment status, and maintain a report backed by payments.txt.</p>
+            </div>
+            <div class="hero-panel" aria-label="Payment summary">
+                <span>Total Completed</span>
+                <strong id="heroRevenue">Rs. 0.00</strong>
+                <small id="heroCount">0 payment records</small>
+            </div>
+        </section>
+
+        <section class="dashboard">
+            <form id="paymentForm" class="payment-form">
+                <div class="section-title">
+                    <div>
+                        <p class="eyebrow">Make payment</p>
+                        <h2>New bill</h2>
+                    </div>
+                    <button class="ghost-button" type="reset">Clear</button>
+                </div>
+
+                <div class="grid two">
+                    <label>
+                        Customer ID
+                        <input name="customerId" type="text" placeholder="CUS-1001" required>
+                    </label>
+                    <label>
+                        Customer Name
+                        <input name="customerName" type="text" placeholder="Nethmi Perera" required>
+                    </label>
+                </div>
+
+                <div class="grid two">
+                    <label>
+                        Appointment ID
+                        <input name="appointmentId" type="text" placeholder="APT-2045" required>
+                    </label>
+                    <label>
+                        Bill Amount
+                        <input name="amount" type="number" min="1" step="0.01" placeholder="4500.00" required>
+                    </label>
+                </div>
+
+                <div class="grid two">
+                    <label>
+                        Payment Type
+                        <select name="paymentType" id="paymentType">
+                            <option value="CARD">Card Payment</option>
+                            <option value="CASH">Cash Payment</option>
+                        </select>
+                    </label>
+                    <label>
+                        Status
+                        <select name="status">
+                            <option value="COMPLETED">Completed</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="FAILED">Failed</option>
+                            <option value="REFUNDED">Refunded</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div id="cardFields" class="method-fields">
+                    <div class="grid two">
+                        <label>
+                            Card Number
+                            <input name="cardNumber" type="text" inputmode="numeric" placeholder="4111111111111111">
+                        </label>
+                        <label>
+                            Card Holder
+                            <input name="cardHolderName" type="text" placeholder="Nethmi Perera">
+                        </label>
+                    </div>
+                    <div class="grid two">
+                        <label>
+                            Expiry Date
+                            <input name="expiryDate" type="text" placeholder="12/28">
+                        </label>
+                        <label>
+                            Card Type
+                            <select name="cardType">
+                                <option value="VISA">Visa</option>
+                                <option value="MASTERCARD">Mastercard</option>
+                                <option value="AMEX">Amex</option>
+                                <option value="OTHER">Other</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="cashFields" class="method-fields hidden">
+                    <label>
+                        Amount Received
+                        <input name="amountReceived" type="number" min="0" step="0.01" placeholder="5000.00">
+                    </label>
+                </div>
+
+                <button class="primary-button" type="submit">Process Payment</button>
+                <p id="formMessage" class="message" role="status"></p>
+            </form>
+
+            <aside class="report-panel">
+                <div class="section-title">
+                    <div>
+                        <p class="eyebrow">Payment report</p>
+                        <h2>Live summary</h2>
+                    </div>
+                </div>
+                <div class="metric featured">
+                    <span>Completed Revenue</span>
+                    <strong id="completedRevenue">Rs. 0.00</strong>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric">
+                        <span>Total</span>
+                        <strong id="totalPayments">0</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Pending</span>
+                        <strong id="pendingPayments">0</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Card</span>
+                        <strong id="cardPayments">0</strong>
+                    </div>
+                    <div class="metric">
+                        <span>Cash</span>
+                        <strong id="cashPayments">0</strong>
+                    </div>
+                </div>
+                <div class="status-strip">
+                    <span><b id="completedPayments">0</b> completed</span>
+                    <span><b id="failedPayments">0</b> failed</span>
+                    <span><b id="refundedPayments">0</b> refunded</span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="history-section">
+            <div class="section-title">
+                <div>
+                    <p class="eyebrow">View payment history</p>
+                    <h2>Payment records</h2>
+                </div>
+                <button id="refreshButton" class="ghost-button" type="button">Refresh</button>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Payment ID</th>
+                        <th>Customer</th>
+                        <th>Appointment</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="paymentsTable"></tbody>
+                </table>
+                <p id="emptyState" class="empty-state">No payments recorded yet.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

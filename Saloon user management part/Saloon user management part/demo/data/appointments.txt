@@ -1,0 +1,2 @@
+type,appointmentId,customerName,customerPhone,serviceType,stylistName,appointmentDate,appointmentTime,bookingStatus,price,vipPerk
+REGULAR,be55601f-517e-4f5f-84ac-5a33f13785bf,Krushanth,1234567890,Facial,Emma,2026-05-27,09:00,Pending,50.00,

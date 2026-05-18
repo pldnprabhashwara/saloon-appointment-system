@@ -1,0 +1,1 @@
+serviceId|serviceName|category|price|durationMinutes|status|description|createdAt|updatedAt

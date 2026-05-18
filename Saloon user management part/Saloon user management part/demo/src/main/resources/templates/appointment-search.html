@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/appointments-layout :: head('Search Appointments - Salon Luxe')}"></head>
+<body class="appointment-module">
+    
+    <nav th:replace="~{fragments/appointments-layout :: navbar}"></nav>
+
+    <main>
+        <section class="hero-wrap" style="background-image: url('/images/bg-2.jpg'); min-height: 100vh; padding: 120px 0;">
+            <div class="overlay"></div>
+            <div class="container">
+                <!-- Search Area -->
+                <div class="search-container p-5 text-center mb-5" style="position: relative; z-index: 1;">
+                    <span class="subheading">Search</span>
+                    <h1 class="mb-4">Find Appointment</h1>
+                    <p class="text-muted mb-4">Find appointments by Customer Name, Phone Number, or exact ID.</p>
+                
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <form action="/appointments/search" method="get" class="d-flex w-100">
+                            <input type="text" name="query" class="form-control search-box" placeholder="e.g. John Doe, 555-1234, or UUID" th:value="${query}" required>
+                            <button type="submit" class="btn btn-search-large px-4">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Area -->
+            <div class="results-container" th:if="${query != null}">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="mb-0 text-light">Results for "<span th:text="${query}" style="color: #d4af37;"></span>"</h4>
+                    <a href="/appointments" class="btn btn-outline-light btn-sm">Clear Search</a>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer Name</th>
+                                <th>Service</th>
+                                <th>Stylist</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="appt : ${appointments}">
+                                <td>
+                                    <small class="text-muted" th:text="${#strings.substring(appt.appointmentId, 0, 8)}"></small>
+                                </td>
+                                <td>
+                                    <div class="fw-bold" th:text="${appt.customerName}"></div>
+                                    <small class="text-muted" th:text="${appt.customerPhone}"></small>
+                                    <br>
+                                    <span th:if="${appt.class.name.contains('VIP')}" class="badge-vip mt-1 d-inline-block">VIP</span>
+                                    <span th:unless="${appt.class.name.contains('VIP')}" class="badge-regular mt-1 d-inline-block">Regular</span>
+                                </td>
+                                <td th:text="${appt.serviceType}"></td>
+                                <td th:text="${appt.stylistName}"></td>
+                                <td th:text="${appt.appointmentDate + ' at ' + appt.appointmentTime}"></td>
+                                <td>
+                                    <span th:class="'status-badge status-' + ${appt.bookingStatus}" th:text="${appt.bookingStatus}"></span>
+                                </td>
+                                <td th:text="${'LKR ' + #numbers.formatDecimal(appt.price * 100, 1, 2)}"></td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <!-- View Button -->
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" th:data-bs-target="'#viewModal' + ${appt.appointmentId}">
+                                            View
+                                        </button>
+                                        
+                                        <!-- Edit Button -->
+                                        <a th:href="@{'/appointments/edit/' + ${appt.appointmentId}}" class="btn btn-sm btn-outline-gold">Edit</a>
+                                        
+                                        <!-- Delete Button triggering Modal -->
+                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" th:data-bs-target="'#deleteModal' + ${appt.appointmentId}">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- No Results state -->
+                            <tr th:if="${appointments == null or appointments.isEmpty()}">
+                                <td colspan="8" class="text-center py-5">
+                                    <div style="font-size: 3rem; color: #d4af37; margin-bottom: 15px;">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <h4 class="text-muted">No appointments found matching your criteria.</h4>
+                                    <p class="text-muted">Try using a different name, phone number, or checking the ID spelling.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Default Empty State Before Search -->
+            <div class="results-container text-center py-5" th:if="${query == null}">
+                <h4 class="text-muted">Enter a search term above to find appointments.</h4>
+            </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals Section (Outside main and container to fix click issues) -->
+    <div th:each="appt : ${appointments}">
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" th:id="'deleteModal' + ${appt.appointmentId}" tabindex="-1" aria-labelledby="'deleteModalLabel' + ${appt.appointmentId}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-danger">
+                    <div class="modal-header border-danger">
+                        <h5 class="modal-title text-danger" th:id="'deleteModalLabel' + ${appt.appointmentId}">Confirm Deletion</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to permanently delete the appointment for <strong th:text="${appt.customerName}"></strong>?</p>
+                        <p class="text-muted small">This action will immediately remove the record and cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer border-danger">
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
+                        <form th:action="@{'/appointments/delete/' + ${appt.appointmentId}}" method="post">
+                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Modal -->
+        <div class="modal fade" th:id="'viewModal' + ${appt.appointmentId}" tabindex="-1" aria-labelledby="'viewModalLabel' + ${appt.appointmentId}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="color: #d4af37;" th:id="'viewModalLabel' + ${appt.appointmentId}">Appointment Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>ID:</strong> <span th:text="${appt.appointmentId}"></span></p>
+                        <p><strong>Customer:</strong> <span th:text="${appt.customerName}"></span></p>
+                        <p><strong>Phone:</strong> <span th:text="${appt.customerPhone}"></span></p>
+                        <p><strong>Service:</strong> <span th:text="${appt.serviceType}"></span></p>
+                        <p><strong>Stylist:</strong> <span th:text="${appt.stylistName}"></span></p>
+                        <p><strong>Date & Time:</strong> <span th:text="${appt.appointmentDate + ' at ' + appt.appointmentTime}"></span></p>
+                        <p><strong>Status:</strong> <span th:text="${appt.bookingStatus}"></span></p>
+                        <p><strong>Price:</strong> <span th:text="${'LKR ' + #numbers.formatDecimal(appt.price * 100, 1, 2)}"></span></p>
+                        <div th:if="${appt.class.name.contains('VIP')}">
+                            <hr style="border-color: rgba(212, 175, 55, 0.3);">
+                            <p style="color: #d4af37;"><strong>VIP Perk:</strong> <span th:text="${appt.complimentaryDrink}"></span></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/appointments-layout :: footer}"></footer>
+    <div th:replace="~{fragments/appointments-layout :: scripts}"></div>
+</body>
+</html>

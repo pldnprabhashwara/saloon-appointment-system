@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/appointments-layout :: head('Booking Successful - Haircare')}"></head>
+<body class="appointment-module">
+    
+    <nav th:replace="~{fragments/appointments-layout :: navbar}"></nav>
+
+    <main>
+        <section class="hero-wrap d-flex align-items-center justify-content-center" style="background-image: url('/images/bg-2.jpg'); min-height: 100vh; padding-top: 150px; padding-bottom: 80px;">
+            <div class="overlay"></div>
+            <div class="container" style="position: relative; z-index: 2;">
+                <div class="row justify-content-center w-100 m-0">
+                    <div class="col-md-9 col-lg-7 col-xl-6">
+                        <div class="success-card p-4 p-md-5 text-center">
+                            <div class="check-icon mb-4 mt-2">
+                                <i class="fas fa-check-circle" style="font-size: 80px; color: #bf925b;"></i>
+                            </div>
+                            <span class="subheading d-block mb-3" style="letter-spacing: 5px;">Success</span>
+                            <h1 class="mb-4 display-5 text-uppercase fw-bold text-white" style="letter-spacing: 3px; font-family: 'Barlow Condensed', sans-serif;">Booking Confirmed!</h1>
+                            
+                            <div class="booking-details text-start mb-5 p-4 mx-auto" style="background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(191, 146, 91, 0.15); max-width: 500px;">
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-5 text-muted text-uppercase small fw-bold">Booking ID</div>
+                                    <div class="col-7 text-white font-monospace" th:text="${appointment.appointmentId}"></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-5 text-muted text-uppercase small fw-bold">Customer</div>
+                                    <div class="col-7 text-white" th:text="${appointment.customerName}"></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-5 text-muted text-uppercase small fw-bold">Service</div>
+                                    <div class="col-7 text-white" th:text="${appointment.serviceType}"></div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-5 text-muted text-uppercase small fw-bold">Stylist</div>
+                                    <div class="col-7 text-white" th:text="${appointment.stylistName}"></div>
+                                </div>
+                                <div class="row mb-0 align-items-center">
+                                    <div class="col-5 text-muted text-uppercase small fw-bold">Date & Time</div>
+                                    <div class="col-7 text-white" th:text="${appointment.appointmentDate} + ' | ' + ${appointment.appointmentTime}"></div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-3 col-md-10 mx-auto">
+                                <a href="/appointments" class="btn btn-primary py-3 fw-bold text-uppercase">View My Appointments</a>
+                                <a href="/appointments/book" class="btn btn-outline-light py-3 fw-bold text-uppercase">Book Another</a>
+                                <a href="/" class="btn btn-link text-muted mt-2 text-decoration-none small text-uppercase">Return to Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/appointments-layout :: footer}"></footer>
+    <div th:replace="~{fragments/appointments-layout :: scripts}"></div>
+</body>
+</html>

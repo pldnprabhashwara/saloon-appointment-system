@@ -1,0 +1,391 @@
+body.appointment-module {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #111;
+    color: #f8f9fa;
+    min-height: 100vh;
+}
+.appointment-module .hero-wrap {
+    width: 100%;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.appointment-module .hero-wrap .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    opacity: .7;
+    background: #000;
+}
+.appointment-module .subheading {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color: #bf925b;
+    font-weight: 700;
+    letter-spacing: 4px;
+}
+.appointment-module .hero-wrap h1 {
+    font-weight: 700;
+    color: #fff;
+    font-family: "Barlow Condensed", Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+.appointment-module .hero-wrap .container {
+    position: relative;
+    z-index: 1;
+}
+.appointment-module .booking-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(191, 146, 91, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+    position: relative;
+    z-index: 2;
+}
+.appointment-module .label {
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.appointment-module .form-group {
+    position: relative;
+}
+.appointment-module .form-control {
+    height: 52px !important;
+    background: rgba(0, 0, 0, 0.3) !important; /* Darker base for better text pop */
+    color: #fff !important;
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding-left: 20px;
+    transition: all 0.3s ease;
+}
+.appointment-module .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+.appointment-module .form-control:hover {
+    border-color: rgba(191, 146, 91, 0.5);
+}
+.appointment-module .form-control:focus {
+    border-color: #bf925b;
+    background: rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 0 15px rgba(191, 146, 91, 0.15) !important;
+}
+.appointment-module select.form-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+.appointment-module select.form-control option {
+    background: #222;
+    color: #fff;
+    padding: 10px;
+}
+.appointment-module .select-wrap, .appointment-module .input-wrap {
+    position: relative;
+}
+.appointment-module .select-wrap .icon, .appointment-module .input-wrap .icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    color: #bf925b;
+    pointer-events: none;
+}
+.appointment-module .btn.btn-primary {
+    background: #bf925b;
+    border: 1px solid #bf925b;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.appointment-module .btn.btn-primary:hover {
+    background: transparent;
+    color: #bf925b;
+}
+.appointment-module .dashboard-container,
+.appointment-module .search-container,
+.appointment-module .results-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(191, 146, 91, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 40px;
+    margin-bottom: 50px;
+}
+.appointment-module .card-body {
+    padding: 0; /* Handled by container padding or wrap */
+}
+.appointment-module .form-control, .appointment-module .form-select {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    border-radius: 10px;
+}
+.appointment-module .form-control.search-box {
+    border-radius: 12px 0 0 12px;
+    padding: 15px;
+    font-size: 1.1rem;
+}
+.appointment-module .form-control:focus, .appointment-module .form-select:focus {
+    background: rgba(0,0,0,0.8);
+    border-color: #bf925b;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(191, 146, 91, 0.3);
+}
+.appointment-module .form-control:read-only {
+    background: rgba(255,255,255,0.1);
+    color: #aaa;
+}
+.appointment-module .btn-gold, .appointment-module .btn-search-large {
+    background: #bf925b;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    border: 1px solid #bf925b;
+    transition: all 0.3s ease;
+}
+.appointment-module .btn-gold {
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+.appointment-module .btn-search-large {
+    border-radius: 0 12px 12px 0;
+    padding: 15px 30px;
+}
+.appointment-module .btn-gold:hover, .appointment-module .btn-search-large:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+.appointment-module .btn-outline-gold {
+    border: 1px solid #bf925b;
+    color: #bf925b;
+    background: transparent;
+    border-radius: 8px;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+.appointment-module .btn-outline-gold:hover {
+    background: #bf925b;
+    color: #fff;
+}
+.appointment-module .btn-outline-danger, .appointment-module .btn-outline-info {
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+.appointment-module .btn-outline-info {
+    color: #17a2b8; border-color: #17a2b8;
+}
+.appointment-module .btn-outline-info:hover {
+    background-color: #17a2b8; color: white;
+}
+.appointment-module .table {
+    color: #fff;
+    background: transparent;
+}
+.appointment-module .table thead th {
+    border-bottom: 2px solid #bf925b;
+    color: #bf925b;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.appointment-module .table tbody td {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    vertical-align: middle;
+}
+.appointment-module .badge-vip {
+    background: linear-gradient(45deg, #8e44ad, #9b59b6);
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+.appointment-module .badge-regular {
+    background: rgba(255,255,255,0.2);
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+.appointment-module .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+.appointment-module .status-Pending { background-color: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid #ffc107; }
+.appointment-module .status-Confirmed { background-color: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
+.appointment-module .status-Completed { background-color: rgba(0, 123, 255, 0.2); color: #80bdff; border: 1px solid #007bff; }
+.appointment-module .status-Cancelled { background-color: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid #dc3545; }
+.appointment-module .vip-section {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.appointment-module .modal-content {
+    background: linear-gradient(135deg, #222 0%, #111 100%);
+    border: 1px solid #d4af37;
+    color: #fff;
+}
+.appointment-module .modal-header, .appointment-module .modal-footer {
+    border-color: rgba(212, 175, 55, 0.3);
+}
+.appointment-module .appointment-footer {
+    background: rgba(0, 0, 0, 0.9);
+    border-top: 1px solid #333;
+    padding: 20px 0;
+    text-align: center;
+    color: #888;
+    margin-top: auto;
+}
+.appointment-module .input-group-text {
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #d4af37;
+    border-radius: 10px 0 0 10px;
+}
+.appointment-module .input-group .form-control {
+    border-radius: 0 10px 10px 0;
+}
+
+/* Flatpickr Customization */
+.flatpickr-calendar.dark {
+    background: #1a1a1a !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8) !important;
+    border: 1px solid #bf925b !important;
+}
+.flatpickr-day.selected {
+    background: #bf925b !important;
+    border-color: #bf925b !important;
+    color: #fff !important;
+}
+.flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover, .flatpickr-time input:focus, .flatpickr-time .flatpickr-am-pm:focus {
+    background: rgba(191, 146, 91, 0.2) !important;
+}
+.flatpickr-months .flatpickr-month {
+    color: #bf925b !important;
+}
+.flatpickr-weekday {
+    color: #aaa !important;
+}
+
+/* Navbar Improvements */
+.appointment-module .ftco_navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 20px 0;
+    background: transparent !important;
+}
+.appointment-module .navbar-brand {
+    font-weight: 800 !important;
+    font-size: 26px !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    color: #fff !important;
+}
+.appointment-module .navbar-brand span {
+    color: #bf925b;
+    margin-right: 12px;
+}
+.appointment-module .navbar-nav .nav-link {
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 15px 25px !important;
+    color: rgba(255,255,255,0.9) !important;
+}
+.appointment-module .navbar-nav .nav-item.active .nav-link {
+    color: #bf925b !important;
+}
+
+/* Success Page Specifics */
+.appointment-module .success-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(191, 146, 91, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+    position: relative;
+    z-index: 2;
+}
+/* Time Slot Redesign */
+.appointment-module .time-slots-container {
+    padding: 10px 0;
+}
+.appointment-module .session-label {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+.appointment-module .time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+}
+.appointment-module .time-slot {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px 5px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+}
+.appointment-module .time-slot:hover {
+    background: rgba(191, 146, 91, 0.1);
+    border-color: rgba(191, 146, 91, 0.5);
+    transform: translateY(-2px);
+}
+.appointment-module .time-slot.active {
+    background: #bf925b !important;
+    border-color: #bf925b !important;
+    color: #000 !important;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(191, 146, 91, 0.4);
+}
+.appointment-module .time-slot.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    background: rgba(0, 0, 0, 0.2);
+    text-decoration: line-through;
+}
+
+@media (max-width: 576px) {
+    .appointment-module .time-slots-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

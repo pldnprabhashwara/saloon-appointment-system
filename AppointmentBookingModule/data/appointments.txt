@@ -1,0 +1,2 @@
+type,appointmentId,customerName,customerPhone,serviceType,stylistName,appointmentDate,appointmentTime,bookingStatus,price,vipPerk
+VIP,f04150f5-451a-46b9-9eaf-5c356a0ea4ba,KAVI,0989838988,Beard Trim,Noah,2026-05-19,11:00,Pending,24.00,Premium Coffee

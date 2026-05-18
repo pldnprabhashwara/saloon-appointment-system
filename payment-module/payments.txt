@@ -1,0 +1,2 @@
+# paymentId|paymentType|customerId|customerName|appointmentId|amount|status|paymentDate|cardNumber|cardHolderName|expiryDate|cardType|amountReceived|changeGiven
+PAY-09E7382C|CASH|HAA-8879|Harin|AJS-9920|45221.00|REFUNDED|2026-04-29 10:54|||||54222.00|9001.00
