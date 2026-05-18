@@ -16,6 +16,11 @@ public class RouteController {
         return "services";
     }
 
+    @GetMapping("/stylist")
+    public String stylist() {
+        return "stylist";
+    }
+
     @GetMapping("/gallery")
     public String gallery() {
         return "gallery";
@@ -36,20 +41,14 @@ public class RouteController {
         return "contact";
     }
 
-    @GetMapping("/user-list")
-    public String userList() {
-        return "user-list";
-    }
+
 
     @GetMapping("/user-form")
     public String userForm() {
         return "user-form";
     }
 
-    @GetMapping("/user-view")
-    public String userView() {
-        return "user-view";
-    }
+
 
     @GetMapping("/user-register")
     public String userRegister() {

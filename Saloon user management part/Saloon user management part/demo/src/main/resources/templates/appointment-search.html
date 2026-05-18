@@ -64,7 +64,7 @@
                                 <td>
                                     <span th:class="'status-badge status-' + ${appt.bookingStatus}" th:text="${appt.bookingStatus}"></span>
                                 </td>
-                                <td th:text="${'$' + #numbers.formatDecimal(appt.price, 1, 2)}"></td>
+                                <td th:text="${'LKR ' + #numbers.formatDecimal(appt.price * 100, 1, 2)}"></td>
                                 <td>
                                     <div class="d-flex gap-1">
                                         <!-- View Button -->
@@ -146,7 +146,7 @@
                         <p><strong>Stylist:</strong> <span th:text="${appt.stylistName}"></span></p>
                         <p><strong>Date & Time:</strong> <span th:text="${appt.appointmentDate + ' at ' + appt.appointmentTime}"></span></p>
                         <p><strong>Status:</strong> <span th:text="${appt.bookingStatus}"></span></p>
-                        <p><strong>Price:</strong> <span th:text="${'$' + #numbers.formatDecimal(appt.price, 1, 2)}"></span></p>
+                        <p><strong>Price:</strong> <span th:text="${'LKR ' + #numbers.formatDecimal(appt.price * 100, 1, 2)}"></span></p>
                         <div th:if="${appt.class.name.contains('VIP')}">
                             <hr style="border-color: rgba(212, 175, 55, 0.3);">
                             <p style="color: #d4af37;"><strong>VIP Perk:</strong> <span th:text="${appt.complimentaryDrink}"></span></p>

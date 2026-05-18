@@ -5,6 +5,7 @@ import com.example.demo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -15,7 +16,12 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/auth")
 public class AuthController {
     
-    private final UserService userService = new UserService();
+    private final UserService userService;
+    
+    @Autowired
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
     
     /**
      * Handle user registration
@@ -62,6 +68,13 @@ public class AuthController {
             Model model) {
         
         try {
+            // Check if it's an admin trying to login via the user form
+            if (("admin@haircare.com".equals(email) || "saloon@admin.com".equals(email)) && 
+                ("Admin@123".equals(password) || "Saloon@123".equals(password))) {
+                session.setAttribute("adminLoggedIn", true);
+                return "redirect:/admin/dashboard";
+            }
+            
             // Authenticate user via service
             User user = userService.loginUser(email, password);
             

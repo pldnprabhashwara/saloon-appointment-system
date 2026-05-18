@@ -5,32 +5,22 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * UserRepository - File-based Data Access Layer
  * Demonstrates OOP Concepts: Abstraction, Encapsulation, Information Hiding
  * Handles CRUD operations: Create, Read, Update, Delete
  */
+@Repository
 public class UserRepository {
     
     private static final String USERS_FILE_PATH = "data/users.txt";
     private static final String CSV_HEADER = "name,phone,email,password,registeredAt,lastUpdatedAt";
     
-    // Private constructor to prevent instantiation - Singleton pattern
-    private UserRepository() {
-    }
-    
-    // Static instance for singleton
-    private static UserRepository instance;
-    
-    /**
-     * Get singleton instance - Lazy initialization
-     */
-    public static synchronized UserRepository getInstance() {
-        if (instance == null) {
-            instance = new UserRepository();
-            instance.initializeFile();
-        }
-        return instance;
+    // Public constructor for Spring DI
+    public UserRepository() {
+        initializeFile();
     }
     
     /**

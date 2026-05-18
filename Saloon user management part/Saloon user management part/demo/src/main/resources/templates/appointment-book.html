@@ -60,12 +60,12 @@
                                                     <div class="select-wrap">
                                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                         <select name="serviceType" class="form-control" required>
-                                                            <option value="" disabled selected>Select a service</option>
-                                                            <option value="Haircut">Haircut</option>
-                                                            <option value="Beard Trim">Beard Trim</option>
-                                                            <option value="Facial">Facial</option>
-                                                            <option value="Hair Coloring">Hair Coloring</option>
-                                                            <option value="Hair Wash">Hair Wash</option>
+                                                            <option value="" disabled th:selected="${preselectedService == null}">Select a service</option>
+                                                            <option value="Haircut" th:selected="${preselectedService == 'Haircut'}">Haircut</option>
+                                                            <option value="Beard Trim" th:selected="${preselectedService == 'Beard Trim'}">Beard Trim</option>
+                                                            <option value="Facial" th:selected="${preselectedService == 'Facial'}">Facial</option>
+                                                            <option value="Hair Coloring" th:selected="${preselectedService == 'Hair Coloring'}">Hair Coloring</option>
+                                                            <option value="Hair Wash" th:selected="${preselectedService == 'Hair Wash'}">Hair Wash</option>
                                                         </select>
                                                     </div>
                                                     <div class="invalid-feedback">Please select a service.</div>

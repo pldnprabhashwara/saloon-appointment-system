@@ -70,9 +70,21 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">User Details</h5>
-                            <p><strong>ID:</strong> 1</p>
-                            <p><strong>Name:</strong> John Doe</p>
-                            <p><strong>Email:</strong> john.doe@example.com</p>
+                            <div th:if="${user != null}">
+                                <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+                                <p><strong>Email (ID):</strong> <span th:text="${user.email}"></span></p>
+                                <p><strong>Phone:</strong> <span th:text="${user.phone}"></span></p>
+                                <p><strong>Registered:</strong> <span th:text="${#temporals.format(user.registeredAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+                                <p><strong>Last Updated:</strong> <span th:text="${#temporals.format(user.lastUpdatedAt, 'yyyy-MM-dd HH:mm')}"></span></p>
+                                <div class="mt-4">
+                                    <a href="/user-list" class="btn btn-secondary">Back to List</a>
+                                    <a th:href="@{/user-edit/{id}(id=${user.email})}" class="btn btn-warning">Edit User</a>
+                                </div>
+                            </div>
+                            <div th:if="${user == null}">
+                                <p class="text-danger">User data not available.</p>
+                                <a href="/user-list" class="btn btn-secondary mt-3">Back to List</a>
+                            </div>
                         </div>
                     </div>
                 </div>

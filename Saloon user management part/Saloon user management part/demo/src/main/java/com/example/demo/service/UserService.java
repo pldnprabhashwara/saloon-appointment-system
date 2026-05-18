@@ -5,11 +5,15 @@ import com.example.demo.repository.UserRepository;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * UserService - Business Logic Layer
  * Demonstrates OOP Concepts: Abstraction, Encapsulation
  * Service pattern for handling user operations
  */
+@Service
 public class UserService {
     
     private final UserRepository userRepository;
@@ -17,8 +21,9 @@ public class UserService {
     /**
      * Constructor with dependency injection
      */
-    public UserService() {
-        this.userRepository = UserRepository.getInstance();
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
     
     /**
