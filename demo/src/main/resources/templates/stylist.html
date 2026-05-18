@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Stylist Management - Haircare Salon</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .stylist-card {
+            border: 1px solid #f1e3d1;
+            border-radius: 12px;
+            padding: 25px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            height: 100%;
+        }
+        .stylist-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .available { background: #d4edda; color: #155724; }
+        .not-available { background: #f8d7da; color: #721c24; }
+        .form-box {
+            background: #101010;
+            padding: 30px;
+            border-radius: 12px;
+            border-top: 4px solid #bf925b;
+        }
+        .form-box label { color: #fff; font-weight: 500; }
+        .form-box h3 { color: #fff; }
+        .gold-btn {
+            background: #bf925b;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 22px;
+            cursor: pointer;
+        }
+        .gold-btn:hover { background: #a77b48; color: #fff; }
+        .small-action-btn {
+            border: none;
+            padding: 7px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        .edit-btn { background: #bf925b; color: #fff; }
+        .delete-btn { background: #dc3545; color: #fff; }
+        .toggle-btn { background: #343a40; color: #fff; }
+        .table thead th { background: #101010; color: #fff; border: none; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/services" class="nav-link">Services</a></li>
+                <li class="nav-item active"><a href="/stylist" class="nav-link">Stylist</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+                    <div class="dropdown-menu shadow-lg border-0" aria-labelledby="moreDropdown" style="background: #101010; border-top: 2px solid #bf925b !important;">
+                        <a class="dropdown-item py-2" href="/gallery" style="color: #fff;">Gallery</a>
+                        <a class="dropdown-item py-2" href="/about" style="color: #fff;">About Us</a>
+                        <a class="dropdown-item py-2" href="/blog" style="color: #fff;">Blog</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="/user-form" class="nav-link">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url('/images/bg-1.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+            <div class="col-md-9 ftco-animate pb-5 text-center">
+                <h2 class="mb-0 bread">Stylist Management</h2>
+                <p class="breadcrumbs">
+                    <span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-round-forward"></i></a></span>
+                    <span>Stylist <i class="ion-ios-arrow-round-forward"></i></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-8 text-center heading-section ftco-animate">
+                <span class="subheading">Our Team</span>
+                <h2 class="mb-4">Manage Salon Stylists</h2>
+                <p>Add stylists, update specialization, change availability, and remove stylist records.</p>
+            </div>
+        </div>
+
+        <div class="alert alert-success" th:if="${param.success}" th:text="'Stylist record successfully ' + ${param.success} + '!'"></div>
+        <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+        <div class="row mb-5">
+            <div class="col-md-5">
+                <div class="form-box">
+                    <h3 th:text="${editStylist != null} ? 'Update Stylist' : 'Add New Stylist'">Add New Stylist</h3>
+                    <form th:action="${editStylist != null} ? @{/stylist/update} : @{/stylist/add}" method="post">
+                        <div class="form-group">
+                            <label>Stylist ID</label>
+                            <input type="text" name="stylistId" class="form-control" placeholder="Example: ST004"
+                                   th:value="${editStylist != null} ? ${editStylist.stylistId} : ''"
+                                   th:readonly="${editStylist != null}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stylist Name</label>
+                            <input type="text" name="stylistName" class="form-control" placeholder="Enter stylist name"
+                                   th:value="${editStylist != null} ? ${editStylist.stylistName} : ''" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Specialization</label>
+                            <input type="text" name="specialization" class="form-control" placeholder="Hair Cut / Coloring / Bridal"
+                                   th:value="${editStylist != null} ? ${editStylist.specialization} : ''" required>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" name="availability" value="true" class="form-check-input" id="availability"
+                                   th:checked="${editStylist != null} ? ${editStylist.available} : true">
+                            <label class="form-check-label" for="availability">Available now</label>
+                        </div>
+                        <button type="submit" class="gold-btn" th:text="${editStylist != null} ? 'Update Stylist' : 'Add Stylist'">Add Stylist</button>
+                        <a href="/stylist" class="btn btn-light ml-2" th:if="${editStylist != null}">Cancel</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Specialization</th>
+                            <th>Availability</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${stylists == null || #lists.isEmpty(stylists)}">
+                            <td colspan="5" class="text-center">No stylists found.</td>
+                        </tr>
+                        <tr th:each="stylist : ${stylists}">
+                            <td th:text="${stylist.stylistId}">ST001</td>
+                            <td th:text="${stylist.stylistName}">Name</td>
+                            <td th:text="${stylist.specialization}">Specialization</td>
+                            <td>
+                                <span class="stylist-badge" th:classappend="${stylist.available} ? 'available' : 'not-available'" th:text="${stylist.availabilityText}">Available</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/stylist/edit/{id}(id=${stylist.stylistId})}" class="small-action-btn edit-btn">Edit</a>
+                                <form th:action="@{/stylist/availability}" method="post" style="display:inline-block;">
+                                    <input type="hidden" name="stylistId" th:value="${stylist.stylistId}">
+                                    <input type="hidden" name="availability" th:value="${!stylist.available}">
+                                    <button type="submit" class="small-action-btn toggle-btn" th:text="${stylist.available} ? 'Set Unavailable' : 'Set Available'">Toggle</button>
+                                </form>
+                                <form th:action="@{/stylist/delete/{id}(id=${stylist.stylistId})}" method="post" style="display:inline-block;" onsubmit="return confirm('Delete this stylist?');">
+                                    <button type="submit" class="small-action-btn delete-btn">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 ftco-animate" th:each="stylist, stat : ${stylists}">
+                <div class="stylist-card text-center mb-4">
+                    <div class="staff">
+                        <div class="img" th:style="'background-image: url(/images/stylist-' + ${(stat.index % 5) + 1} + '.jpg);'"></div>
+                    </div>
+                    <h3 class="mt-3" th:text="${stylist.stylistName}">Stylist Name</h3>
+                    <p class="mb-2" th:text="${stylist.specialization}">Specialization</p>
+                    <span class="stylist-badge" th:classappend="${stylist.available} ? 'available' : 'not-available'" th:text="${stylist.availabilityText}">Available</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="ftco-footer ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Haircare</h2>
+                    <p>Professional hair care services tailored for you.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="ftco-footer-widget mb-4 ml-md-5">
+                    <h2 class="ftco-heading-2">Links</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="/"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
+                        <li><a href="/about"><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
+                        <li><a href="/services"><span class="ion-ios-arrow-round-forward mr-2"></span>Services</a></li>
+                        <li><a href="/contact"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Hours</h2>
+                    <ul class="list-unstyled open-hours">
+                        <li>Mon – Fri <span>8:00am – 7:00pm</span></li>
+                        <li>Sat <span>9:00am – 5:00pm</span></li>
+                        <li>Sun <span>Closed</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row"><div class="col-md-12 text-center"><p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Haircare</p></div></div>
+    </div>
+</footer>
+
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
