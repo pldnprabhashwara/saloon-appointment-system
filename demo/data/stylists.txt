@@ -1,0 +1,4 @@
+stylistId,stylistName,specialization,availability
+ST001,Amanda Silva,Hair Cutting,true
+ST002,Kavindi Perera,Hair Coloring,true
+ST003,Nimal Fernando,Bridal Styling,false
