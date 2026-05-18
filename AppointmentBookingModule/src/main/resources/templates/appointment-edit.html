@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/appointments-layout :: head('Edit Appointment - Haircare')}"></head>
+<body class="appointment-module">
+    
+    <nav th:replace="~{fragments/appointments-layout :: navbar}"></nav>
+
+    <main>
+        <section class="hero-wrap" style="background-image: url('/images/bg-2.jpg'); min-height: 100vh; display: flex; align-items: center; padding: 100px 0;">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row no-gutters justify-content-center align-items-center">
+                    <div class="col-lg-10">
+                        <div class="text text-center mb-5">
+                            <span class="subheading">Reschedule</span>
+                            <h1 class="mb-4">Edit Appointment</h1>
+                        </div>
+                        
+                        <div class="booking-form-wrap">
+                            <div class="card booking-card">
+                                <div class="card-body p-4 p-md-5">
+                                    
+                                    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <span th:text="${error}"></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    
+                                    <form action="/appointments/update" method="post" id="editForm" class="needs-validation" novalidate>
+                                        <input type="hidden" name="id" th:value="${appointment.appointmentId}">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Customer Name (Read-only)</label>
+                                                    <input type="text" class="form-control" th:value="${appointment.customerName}" readonly style="opacity: 0.7;">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Phone Number (Read-only)</label>
+                                                    <input type="text" class="form-control" th:value="${appointment.customerPhone}" readonly style="opacity: 0.7;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Service Type</label>
+                                                    <div class="select-wrap">
+                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                        <select name="serviceType" class="form-control" required>
+                                                            <option th:selected="${appointment.serviceType == 'Haircut'}" value="Haircut">Haircut</option>
+                                                            <option th:selected="${appointment.serviceType == 'Beard Trim'}" value="Beard Trim">Beard Trim</option>
+                                                            <option th:selected="${appointment.serviceType == 'Facial'}" value="Facial">Facial</option>
+                                                            <option th:selected="${appointment.serviceType == 'Hair Coloring'}" value="Hair Coloring">Hair Coloring</option>
+                                                            <option th:selected="${appointment.serviceType == 'Hair Wash'}" value="Hair Wash">Hair Wash</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Stylist</label>
+                                                    <div class="select-wrap">
+                                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                        <select name="stylistName" class="form-control" required>
+                                                            <option th:selected="${appointment.stylistName == 'Emma'}" value="Emma">Emma</option>
+                                                            <option th:selected="${appointment.stylistName == 'Liam'}" value="Liam">Liam</option>
+                                                            <option th:selected="${appointment.stylistName == 'Sophia'}" value="Sophia">Sophia</option>
+                                                            <option th:selected="${appointment.stylistName == 'Noah'}" value="Noah">Noah</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Date</label>
+                                                    <div class="input-wrap">
+                                                        <div class="icon"><span class="fa fa-calendar"></span></div>
+                                                        <input type="text" name="date" class="form-control datepicker" th:value="${appointment.appointmentDate}" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label mb-3">Select Appointment Time</label>
+                                                    <input type="hidden" name="time" id="selectedTime" th:value="${appointment.appointmentTime}" required>
+                                                    
+                                                    <div class="time-slots-container">
+                                                        <div class="session-label mb-2"><i class="far fa-sun me-2"></i>Morning Sessions</div>
+                                                        <div class="time-slots-grid mb-4">
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '09:00' ? 'active' : ''}" data-time="09:00">09:00 AM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '09:30' ? 'active' : ''}" data-time="09:30">09:30 AM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '10:00' ? 'active' : ''}" data-time="10:00">10:00 AM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '10:30' ? 'active' : ''}" data-time="10:30">10:30 AM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '11:00' ? 'active' : ''}" data-time="11:00">11:00 AM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '11:30' ? 'active' : ''}" data-time="11:30">11:30 AM</div>
+                                                        </div>
+
+                                                        <div class="session-label mb-2"><i class="fas fa-sun me-2"></i>Afternoon Sessions</div>
+                                                        <div class="time-slots-grid">
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '13:00' ? 'active' : ''}" data-time="13:00">01:00 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '13:30' ? 'active' : ''}" data-time="13:30">01:30 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '14:00' ? 'active' : ''}" data-time="14:00">02:00 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '14:30' ? 'active' : ''}" data-time="14:30">02:30 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '15:00' ? 'active' : ''}" data-time="15:00">03:00 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '15:30' ? 'active' : ''}" data-time="15:30">03:30 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '16:00' ? 'active' : ''}" data-time="16:00">04:00 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '16:30' ? 'active' : ''}" data-time="16:30">04:30 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '17:00' ? 'active' : ''}" data-time="17:00">05:00 PM</div>
+                                                            <div class="time-slot" th:classappend="${#strings.substring(appointment.appointmentTime.toString(), 0, 5) == '17:30' ? 'active' : ''}" data-time="17:30">05:30 PM</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="invalid-feedback d-block mt-2" id="timeError" style="display: none !important;">Please select an available time slot.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <div class="form-group">
+                                                    <label class="label">Booking Status</label>
+                                                    <select name="status" class="form-control" required>
+                                                        <option th:selected="${appointment.bookingStatus == 'Pending'}" value="Pending">Pending</option>
+                                                        <option th:selected="${appointment.bookingStatus == 'Confirmed'}" value="Confirmed">Confirmed</option>
+                                                        <option th:selected="${appointment.bookingStatus == 'Completed'}" value="Completed">Completed</option>
+                                                        <option th:selected="${appointment.bookingStatus == 'Cancelled'}" value="Cancelled">Cancelled</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mt-4 text-center d-flex gap-3 justify-content-center">
+                                            <button type="submit" class="btn btn-primary py-3 px-5">Save Changes</button>
+                                            <a href="/appointments" class="btn btn-outline-light py-3 px-5">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer th:replace="~{fragments/appointments-layout :: footer}"></footer>
+    <div th:replace="~{fragments/appointments-layout :: scripts}"></div>
+</body>
+</html>

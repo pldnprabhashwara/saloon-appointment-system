@@ -1,0 +1,1 @@
+type,appointmentId,customerName,customerPhone,serviceType,stylistName,appointmentDate,appointmentTime,bookingStatus,price,vipPerk
