@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ratings - Haircare Salon</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .rating-card { background:#fff; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:28px; margin-bottom:24px; }
+        .stars-display { color:#bf925b; font-size:1.2rem; letter-spacing:2px; }
+        .service-badge { background:rgba(191,146,91,0.15); color:#bf925b; font-size:0.75rem; font-weight:600; padding:3px 10px; border-radius:20px; letter-spacing:0.5px; }
+        .rating-meta { font-size:0.82rem; color:#aaa; margin-top:6px; }
+        .filter-bar { background:#fff; border-radius:8px; padding:18px 24px; box-shadow:0 2px 10px rgba(0,0,0,0.06); margin-bottom:28px; }
+        .filter-bar select, .filter-bar input { border:1px solid #ddd; border-radius:6px; padding:7px 12px; font-size:0.9rem; }
+        .filter-bar select:focus, .filter-bar input:focus { outline:none; border-color:#bf925b; }
+        .btn-gold { background:#bf925b; color:#fff; border:none; border-radius:6px; padding:8px 22px; font-weight:600; transition:background 0.2s; }
+        .btn-gold:hover { background:#a97a45; color:#fff; }
+        .stat-pill { background:#f8f8f8; border-radius:8px; padding:14px 20px; text-align:center; }
+        .stat-pill h3 { color:#bf925b; font-size:1.8rem; font-weight:700; margin:0; }
+        .stat-pill p  { color:#888; font-size:0.8rem; margin:0; }
+        .empty-state { text-align:center; color:#aaa; padding:60px 0; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/"><span class="flaticon-scissors-in-a-hair-salon-badge"></span>Haircare</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/services" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="/stylist" class="nav-link">Stylist</a></li>
+                    <li class="nav-item active"><a href="/ratings" class="nav-link">Ratings</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+                        <div class="dropdown-menu shadow-lg border-0" aria-labelledby="moreDropdown" style="background:#101010;border-top:2px solid #bf925b !important;">
+                            <a class="dropdown-item py-2" href="/gallery" style="color:#fff;">Gallery</a>
+                            <a class="dropdown-item py-2" href="/about" style="color:#fff;">About Us</a>
+                            <a class="dropdown-item py-2" href="/blog" style="color:#fff;">Blog</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="/admin/login" class="nav-link">Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/images/bg-1.jpg');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-center">
+                <div class="col-md-9 ftco-animate pb-5 text-center">
+                    <h2 class="mb-0 bread">Customer Ratings</h2>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-round-forward"></i></a></span> <span>Ratings <i class="ion-ios-arrow-round-forward"></i></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section" style="background:#f4f4f4;">
+        <div class="container">
+
+            <!-- Flash messages -->
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${success}"></span>
+                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+            </div>
+            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span th:text="${error}"></span>
+                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+            </div>
+
+            <!-- Stats row -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="stat-pill">
+                        <h3 th:text="${totalCount}">0</h3>
+                        <p>Total Reviews</p>
+                    </div>
+                </div>
+                <div class="col-md-8 d-flex align-items-center justify-content-end">
+                    <a href="/ratings/submit" class="btn btn-gold">&#9733; Leave a Review</a>
+                </div>
+            </div>
+
+            <!-- Filter bar -->
+            <div class="filter-bar d-flex align-items-center gap-3 flex-wrap">
+                <form method="GET" action="/ratings" class="d-flex align-items-center" style="gap:10px;">
+                    <label style="font-weight:600;color:#333;margin:0;">Filter by Service:</label>
+                    <select name="service" onchange="this.form.submit()">
+                        <option value="">All Services</option>
+                        <option value="Haircut" th:selected="${filterService == 'Haircut'}">Haircut</option>
+                        <option value="Coloring" th:selected="${filterService == 'Coloring'}">Coloring</option>
+                        <option value="Styling" th:selected="${filterService == 'Styling'}">Styling</option>
+                        <option value="Treatment" th:selected="${filterService == 'Treatment'}">Treatment</option>
+                        <option value="Other" th:selected="${filterService == 'Other'}">Other</option>
+                    </select>
+                </form>
+            </div>
+
+            <!-- Ratings list -->
+            <div th:if="${ratings == null or ratings.isEmpty()}" class="empty-state">
+                <p style="font-size:2rem;">&#9733;</p>
+                <p>No ratings yet. Be the first to leave a review!</p>
+                <a href="/ratings/submit" class="btn btn-gold mt-2">Leave a Review</a>
+            </div>
+
+            <div th:each="rating : ${ratings}" class="rating-card ftco-animate">
+                <div class="d-flex justify-content-between align-items-start flex-wrap">
+                    <div>
+                        <div class="stars-display">
+                            <span th:each="i : ${#numbers.sequence(1, rating.stars)}">&#9733;</span>
+                            <span th:each="i : ${#numbers.sequence(rating.stars + 1, 5)}" style="color:#ddd;">&#9733;</span>
+                        </div>
+                        <h5 style="margin:8px 0 4px;font-weight:700;" th:text="${rating.userName}">Name</h5>
+                        <p style="color:#555;margin-bottom:8px;" th:text="${rating.comment}">Comment</p>
+                        <div class="rating-meta">
+                            <span th:text="${rating.userEmail}"></span> &bull;
+                            <span th:text="${#temporals.format(rating.createdAt, 'MMM dd, yyyy')}"></span>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="service-badge" th:text="${rating.serviceName}">Service</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="ftco-footer ftco-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-3"><div class="ftco-footer-widget mb-4"><h2 class="ftco-heading-2">Haircare</h2><p>Professional hair care services tailored for you.</p></div></div>
+                <div class="col-md-3"><div class="ftco-footer-widget mb-4 ml-md-5"><h2 class="ftco-heading-2">Links</h2><ul class="list-unstyled"><li><a href="/"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li><li><a href="/ratings"><span class="ion-ios-arrow-round-forward mr-2"></span>Ratings</a></li><li><a href="/services"><span class="ion-ios-arrow-round-forward mr-2"></span>Services</a></li><li><a href="/contact"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li></ul></div></div>
+                <div class="col-md-3"><div class="ftco-footer-widget mb-4"><h2 class="ftco-heading-2">Hours</h2><ul class="list-unstyled open-hours"><li>Mon – Fri <span>8:00am – 7:00pm</span></li><li>Sat <span>9:00am – 5:00pm</span></li><li>Sun <span>Closed</span></li></ul></div></div>
+                <div class="col-md-3"><div class="ftco-footer-widget mb-4"><h2 class="ftco-heading-2">Contact</h2><ul class="list-unstyled"><li><span class="ion-ios-map mr-2"></span>198 West 21th Street, NY</li><li><a href="#"><span class="ion-ios-call mr-2"></span>+1 234 567 890</a></li><li><a href="#"><span class="ion-ios-mail mr-2"></span>info@haircare.com</a></li></ul></div></div>
+            </div>
+            <div class="row"><div class="col-md-12 text-center"><p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Haircare</p></div></div>
+        </div>
+    </footer>
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.stellar.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/jquery.animateNumber.min.js"></script>
+    <script src="/js/scrollax.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

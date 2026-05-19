@@ -9864,3 +9864,36 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+/* Custom Premium Navbar Dropdowns */
+.navbar-nav .dropdown-menu {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: translateY(10px);
+}
+
+.navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    font-family: " Barlow Condensed\, sans-serif;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ font-size: 14px;
+ font-weight: 600;
+ transition: 0.3s;
+ padding: 10px 20px !important;
+}
+
+.dropdown-item:hover {
+ background: transparent !important;
+ color: #bf925b !important;
+ padding-left: 25px !important;
+}
+
