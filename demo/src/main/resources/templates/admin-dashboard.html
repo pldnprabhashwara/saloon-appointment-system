@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard - Ratings</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body { background:#f4f4f4; }
+        .admin-topbar { background:#101010; color:#bf925b; padding:8px 0; font-size:0.85rem; letter-spacing:1px; }
+        .admin-topbar .container { display:flex; justify-content:space-between; align-items:center; }
+        .admin-topbar a { color:#fff; text-decoration:none; }
+        .admin-topbar a:hover { color:#bf925b; }
+        .dashboard-header { background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%); color:#fff; padding:40px 0 30px; margin-bottom:30px; }
+        .dashboard-header h1 { font-size:2rem; color:#bf925b; margin-bottom:4px; }
+        .dashboard-header p  { color:#aaa; margin:0; font-size:0.9rem; }
+        .stat-card { background:#fff; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:24px 28px; display:flex; align-items:center; gap:18px; margin-bottom:28px; }
+        .stat-icon { width:56px; height:56px; border-radius:50%; background:rgba(191,146,91,0.15); display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:#bf925b; }
+        .stat-info h2 { font-size:1.8rem; font-weight:700; color:#333; margin:0; }
+        .stat-info p  { color:#888; margin:0; font-size:0.85rem; }
+        .section-card { background:#fff; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.08); padding:28px; margin-bottom:30px; }
+        .section-card h4 { font-size:1.1rem; font-weight:700; color:#333; border-bottom:2px solid #bf925b; padding-bottom:10px; margin-bottom:20px; }
+        .ratings-table { width:100%; border-collapse:collapse; font-size:0.9rem; }
+        .ratings-table th { background:#f8f8f8; color:#555; font-weight:600; text-transform:uppercase; font-size:0.75rem; letter-spacing:1px; padding:12px 14px; text-align:left; }
+        .ratings-table td { padding:13px 14px; border-bottom:1px solid #f0f0f0; color:#333; vertical-align:middle; }
+        .ratings-table tr:last-child td { border-bottom:none; }
+        .ratings-table tr:hover td { background:#fafafa; }
+        .stars-col { color:#bf925b; letter-spacing:2px; }
+        .service-badge { background:rgba(191,146,91,0.15); color:#bf925b; font-size:0.72rem; font-weight:600; padding:3px 9px; border-radius:20px; }
+        .btn-delete { background:#dc3545; color:#fff; border:none; border-radius:5px; padding:5px 14px; font-size:0.8rem; cursor:pointer; font-weight:600; transition:background 0.2s; }
+        .btn-delete:hover { background:#b02a37; }
+        .alert-success-custom { background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:6px; padding:12px 18px; margin-bottom:20px; }
+        .alert-danger-custom  { background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; border-radius:6px; padding:12px 18px; margin-bottom:20px; }
+        .search-bar input { border:1px solid #ddd; border-radius:6px; padding:8px 14px; width:280px; font-size:0.9rem; }
+        .search-bar input:focus { outline:none; border-color:#bf925b; }
+        .empty-state { text-align:center; color:#aaa; padding:40px 0; }
+    </style>
+</head>
+<body>
+    <div class="admin-topbar">
+        <div class="container">
+            <span><strong style="color:#bf925b;">&#9679;</strong>&nbsp; Admin Panel &mdash; Haircare Ratings</span>
+            <span><a href="/">&#8962; View Site</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/admin/logout">Logout</a></span>
+        </div>
+    </div>
+
+    <div class="dashboard-header">
+        <div class="container">
+            <h1>Ratings Management Dashboard</h1>
+            <p>View and manage all customer ratings submitted to the Haircare system.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div th:if="${param.deleted}" class="alert-success-custom">&#10003;&nbsp; Rating deleted successfully.</div>
+        <div th:if="${param.error}"   class="alert-danger-custom">&#10005;&nbsp; Error: <span th:text="${param.error}"></span></div>
+        <div th:if="${error}"         class="alert-danger-custom">&#10005;&nbsp; <span th:text="${error}"></span></div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-icon">&#9733;</div>
+                    <div class="stat-info">
+                        <h2 th:text="${totalCount != null ? totalCount : 0}">0</h2>
+                        <p>Total Ratings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h4>All Customer Ratings</h4>
+            <div class="search-bar mb-3">
+                <input type="text" id="searchInput" placeholder="Search by name, email or service..." onkeyup="filterTable()">
+            </div>
+
+            <div th:if="${ratings == null or ratings.isEmpty()}" class="empty-state">
+                <p style="font-size:2rem;">&#9733;</p>
+                <p>No ratings submitted yet.</p>
+            </div>
+
+            <div th:if="${ratings != null and !ratings.isEmpty()}">
+                <table class="ratings-table" id="ratingsTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Service</th>
+                            <th>Stars</th>
+                            <th>Comment</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="rating, stat : ${ratings}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${rating.userName}"></td>
+                            <td th:text="${rating.userEmail}"></td>
+                            <td><span class="service-badge" th:text="${rating.serviceName}"></span></td>
+                            <td class="stars-col">
+                                <span th:each="i : ${#numbers.sequence(1, rating.stars)}">&#9733;</span>
+                                <span th:each="i : ${#numbers.sequence(rating.stars + 1, 5)}" style="color:#ddd;">&#9733;</span>
+                            </td>
+                            <td style="max-width:200px;" th:text="${rating.comment}"></td>
+                            <td th:text="${#temporals.format(rating.createdAt, 'MMM dd, yyyy')}"></td>
+                            <td>
+                                <form method="POST" action="/admin/ratings/delete" style="display:inline;"
+                                      th:attr="data-name=${rating.userName}"
+                                      onsubmit="return confirm('Delete this rating from ' + this.dataset.name + '?');">
+                                    <input type="hidden" name="id" th:value="${rating.id}">
+                                    <button type="submit" class="btn-delete">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script>
+        function filterTable() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var rows  = document.querySelectorAll('#ratingsTable tbody tr');
+            rows.forEach(function(row) {
+                var name    = row.cells[1] ? row.cells[1].textContent.toLowerCase() : '';
+                var email   = row.cells[2] ? row.cells[2].textContent.toLowerCase() : '';
+                var service = row.cells[3] ? row.cells[3].textContent.toLowerCase() : '';
+                row.style.display = (name.includes(input) || email.includes(input) || service.includes(input)) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
